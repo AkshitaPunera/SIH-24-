@@ -1,0 +1,12 @@
+{
+  "name": "mueseum-ticketing",
+  "version": "1.0.0",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Tech Volsung",
+  "license": "ISC",
+  "description": "A chatbot to book tickets and manage the vistors"
+}
