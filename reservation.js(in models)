@@ -1,0 +1,13 @@
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
+
+const reservationSchema = new Schema({
+    state: { type: String, required: true },
+    museum: { type: String, required: true },
+    tickets: { type: Number, required: true },
+    date: { type: Date, required: true }
+});
+
+const Reservation = mongoose.model('Reservation', reservationSchema);
+
+module.exports = Reservation;
