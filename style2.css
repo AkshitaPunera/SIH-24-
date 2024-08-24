@@ -1,0 +1,168 @@
+
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    animation: backgroundAnimation 10s ease-in-out infinite;
+}
+
+
+@keyframes backgroundAnimation {
+    0% { background: linear-gradient(135deg, #f5f7fa, #c3cfe2); }
+    50% { background: linear-gradient(135deg, #d4fc79, #96e6a1); }
+    100% { background: linear-gradient(135deg, #f5f7fa, #c3cfe2); }
+}
+
+.container {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.15);
+    padding: 25px;
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+    box-sizing: border-box;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Hover effect for container */
+.container:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.2);
+}
+
+.ticket-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    animation: fadeIn 1.5s ease-in-out;
+}
+
+/* Fade-in animation for content */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.qr-code img {
+    width: 120px;
+    height: 120px;
+    border: 3px solid #007bff;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease;
+}
+
+/* Hover effect for QR code */
+.qr-code img:hover {
+    transform: rotate(5deg) scale(1.1);
+}
+
+.ticket-info {
+    margin: 20px 0;
+}
+
+.ticket-info p {
+    margin: 10px 0;
+    font-size: 15px;
+    color: #444;
+    line-height: 1.6;
+}
+
+.payment-link {
+    margin-top: 25px;
+}
+
+.payment-button {
+    display: inline-block;
+    background-color: #28a745;
+    color: #fff;
+    padding: 12px 25px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: bold;
+    margin: 10px;
+    transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Hover effect for payment button */
+.payment-button:hover {
+    background-color: #218838;
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+}
+
+.payment-button:active {
+    background-color: #1e7e34;
+    transform: translateY(0);
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+}
+
+.footer {
+    margin-top: 30px;
+    font-size: 12px;
+    color: #777;
+    animation: fadeInUp 2s ease-in-out;
+}
+
+/* Fade-in-up animation for footer */
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.footer a {
+    color: #007bff;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+/* Hover effect for footer links */
+.footer a:hover {
+    text-decoration: underline;
+    color: #0056b3;
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 20px;
+        width: 90%;
+    }
+
+    .qr-code img {
+        width: 100px;
+        height: 100px;
+    }
+
+    .payment-button {
+        padding: 10px 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        width: 100%;
+        padding: 15px;
+    }
+
+    .ticket-info p {
+        font-size: 13px;
+    }
+
+    .payment-button {
+        padding: 10px 15px;
+        font-size: 14px;
+    }
+
+    .footer {
+        font-size: 11px;
+    }
+}
