@@ -93,7 +93,11 @@ app.post('/admin/buildmuseum',isLoggedIn, async (req,res)=>{
 
 
 });
-
+// user end app
+// Intro page for user end
+app.get('/user',(req,res)=>{
+    res.render("intro");
+});
 
 app.listen(3000, () => {
     console.log('Server is running on port 3000');

@@ -263,7 +263,7 @@ div.copyright{
 .museumcard{
     background-color: #f1e3e3cd;
     height: 100%;
-    width: 33%;
+    min-width: 33%;
     border-radius: 1rem;
     padding: 0.5rem;
 }
