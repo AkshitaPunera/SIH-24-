@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Museum List</title>
+    <link rel="stylesheet" href="/stylesheets/adminstyle.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Great+Vibes&family=League+Gothic&family=Staatliches&family=Tangerine:wght@400;700&family=Teko:wght@300..700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="mainbody">
+        <img src="/images/3416930.jpg" alt="">
+    </div>
+    <div class="maincontent">
+        <div class="brandinglogo">
+            <img src="/images/Screenshot_2024-08-23_at_2.23.26_PM-removebg-preview.png" alt="">
+        </div>
+        <div class="admintext">
+            <p>Admin Features</p>
+        </div>
+        <div class="museumlist">
+            <% if (museumdata.length === 0) { %>
+                <h1>No Museums Available</h1>
+            <% } else { %>
+                <% museumdata.forEach(function(museum) { %>
+                    <div class="museumcard">
+                        <div class="museumimage">
+                            <img src="<%= museum.image %>" alt="">
+                        </div>
+                        <div class="museumdet">
+                            <div class="detailblock">
+                                <div class="mutitle">Name</div>
+                                <div class="mudesc"><%= museum.name %></div>
+                            </div>
+                            <div class="detailblock">
+                                <div class="mutitle">Country</div>
+                                <div class="mudesc"><%= museum.country %></div>
+                            </div>
+                            <div class="detailblock">
+                                <div class="mutitle">City</div>
+                                <div class="mudesc"><%= museum.city %></div>
+                            </div>
+                            <div class="detailblock">
+                                <div class="mutitle">Capacity</div>
+                                <div class="mudesc"><%= museum.capacity %></div>
+                            </div>
+                            <div class="detailblock">
+                                <div class="mutitle">Bookings</div>
+                                <div class="mudesc">Active</div>
+                            </div>
+                            <div class="detailblock">
+                                <div class="mutitle">Phone</div>
+                                <div class="mudesc"><%= museum.phone %></div>
+                            </div>
+                        </div>
+                        <div class="muedit">
+                            <div class="editmu"><a href="">Edit</a></div>
+                            <div class="deletemu"><a href="">Delete</a></div>
+                        </div>
+                    </div>
+                <% }) %>
+            <% } %>
+        </div>
+        <div class="logout">
+            <a href="/admin/logout">Logout</a>
+        </div>
+    </div>
+</body>
+</html>
