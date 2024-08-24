@@ -1,15 +1,30 @@
 const chatbox = document.getElementById('chatbox');
-const userInput = document.getElementById('userInput');
-const sendButton = document.getElementById('sendButton');
 const stateSelect = document.getElementById('stateSelect');
 const museumSelect = document.getElementById('museumSelect');
 const ticketInput = document.getElementById('ticketInput');
 const dateInput = document.getElementById('dateInput');
+const getTicketsContainer = document.getElementById('getTicketsContainer');
+const getTicketsButton = document.getElementById('getTicketsButton');
 
 const museums = {
-    Delhi: ["1", "2", "3", "4", "5"],
-    Mumbai: ["1", "2", "3", "4", "5"]
+    Delhi: [
+        "National Museum",
+        "National Gallery of Modern Art",
+        "Indira Gandhi Memorial Museum",
+        "National Science Centre",
+        "Railway Museum"
+    ],
+    Mumbai: [
+        "Chhatrapati Shivaji Maharaj Vastu Sangrahalaya",
+        "National Gallery of Modern Art, Mumbai",
+        "Mani Bhavan Gandhi Museum",
+        "Dr. Bhau Daji Lad Museum",
+        "RBI Monetary Museum"
+    ]
 };
+
+let availableSeats = 0; 
+let reservationComplete = false; 
 
 const chatbot = {
     step: 0,
@@ -21,10 +36,12 @@ const chatbot = {
     ],
     responses: [],
     nextStep() {
+        if (reservationComplete) return; 
+
         if (this.step < this.questions.length) {
             this.addBotMessage(this.questions[this.step]);
             this.showInputForStep(this.step);
-        } else {
+        } else if (this.step === this.questions.length) {
             this.showSummary();
         }
     },
@@ -43,7 +60,6 @@ const chatbot = {
         chatbox.scrollTop = chatbox.scrollHeight; 
         this.responses[this.step] = message;
         this.step++;
-        // Only call nextStep if it has not already been triggered
         if (this.step < this.questions.length) {
             setTimeout(() => this.nextStep(), 1000); 
         }
@@ -62,7 +78,7 @@ const chatbot = {
                 dateInput.focus();
                 break;
             case 3:
-                // Wait for date selection before showing the ticket input
+            
                 break;
         }
     },
@@ -81,6 +97,9 @@ const chatbot = {
         this.addBotMessage(`Museum: ${this.responses[1]}`);
         this.addBotMessage(`Date: ${this.responses[2]}`);
         this.addBotMessage(`Tickets: ${this.responses[3]}`);
+        
+   
+        getTicketsContainer.style.display = 'block';
     }
 };
 
@@ -117,10 +136,10 @@ function fetchAvailableSeats(museum, date) {
     fetch(`/availability/${museum}/${date}`)
         .then(response => response.json())
         .then(data => {
-            const availableSeats = data.availableSeats;
+            availableSeats = data.availableSeats; 
             chatbot.addBotMessage(`There are ${availableSeats} seats available at this museum on ${date}.`);
-            chatbot.addBotMessage("How many seats would you like to reserve?");
-            ticketInput.style.display = 'block'; // Show the ticket input field
+        
+            ticketInput.style.display = 'block'; 
             ticketInput.focus();
         })
         .catch(error => {
@@ -129,20 +148,29 @@ function fetchAvailableSeats(museum, date) {
         });
 }
 
+
 ticketInput.addEventListener('keypress', (e) => {
     if (e.key === 'Enter' && ticketInput.value !== '') {
+        const requestedTickets = parseInt(ticketInput.value);
+
+        if (requestedTickets > availableSeats) {
+            chatbot.addBotMessage('Sorry, there are not enough seats available. Please enter a smaller number.');
+            ticketInput.value = '';
+            ticketInput.focus();
+            return; 
+        }
+
         chatbot.addUserMessage(ticketInput.value);
         ticketInput.style.display = 'none';
 
-        // Prepare reservation data
         const reservationData = {
             state: stateSelect.value,
             museum: museumSelect.value,
-            tickets: parseInt(ticketInput.value),
+            tickets: requestedTickets,
             date: dateInput.value
         };
 
-        // Send reservation request
+    
         fetch('/reserve', {
             method: 'POST',
             headers: {
@@ -153,18 +181,21 @@ ticketInput.addEventListener('keypress', (e) => {
         .then(response => response.json())
         .then(data => {
             chatbot.addBotMessage(data.message);
-            // Optionally fetch updated availability
-            fetchAvailableSeats(museumSelect.value, dateInput.value);
+            reservationComplete = true; 
+            
+            
+            getTicketsContainer.style.display = 'block';
         })
         .catch(error => {
             console.error('Error reserving tickets:', error);
             chatbot.addBotMessage('An error occurred while reserving tickets.');
         });
-
-        // Move to the next step after reservation
-        chatbot.nextStep();
     }
 });
 
-// Start the chatbot
+getTicketsButton.addEventListener('click', () => {
+    window.location.href = 'index2.html'; 
+});
+
+
 chatbot.nextStep();
